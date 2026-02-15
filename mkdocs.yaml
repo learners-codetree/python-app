@@ -1,0 +1,11 @@
+site_name: 'python-app'
+site_description: 'Main documentation for python-app APIs'
+repo_url: https://github.com/learners-codetree/python-app
+edit_uri: edit/main/docs
+
+plugins:
+  - techdocs-core
+
+nav:
+  - Overview:
+      - Getting Started: 'docs/index.md'
