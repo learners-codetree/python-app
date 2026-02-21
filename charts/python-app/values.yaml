@@ -2,7 +2,7 @@ replicaCount: 1
 image:
   repository: codetreelearners/python-app
   pullPolicy: IfNotPresent
-  tag: "102609"
+  tag: "32adbf"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
