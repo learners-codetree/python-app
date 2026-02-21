@@ -27,11 +27,26 @@ jobs:
         with:
           push: true
           tags: codetreelearners/python-app:${{ steps.vars.outputs.SHORT_SHA }}
+    outputs:
+      IMAGE_TAG: ${{ steps.vars.outputs.SHORT_SHA }}
 
   cd:
     needs: ci
     runs-on: self-hosted
     steps:
+      - uses: actions/checkout@v3
+      
+      - name: Modify values.yaml with new image tag
+        shell: bash
+        run: |
+          echo ${{ needs.ci.outputs.IMAGE_TAG }}
+          yq -Yi '.image.tag = "${{ needs.ci.outputs.IMAGE_TAG }}"' charts/python-app/values.yaml
+
+      - name: Commit and push changes to values.yaml
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "Update values.yaml with image tag to ${{ needs.ci.outputs.IMAGE_TAG }}"
+
       - name: Install ArgoCD CLI
         run: |
           sudo curl -ksSL -o argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
