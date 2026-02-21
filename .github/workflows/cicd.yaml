@@ -35,11 +35,12 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Modify values.yaml with new image tag
         shell: bash
         run: |
           echo ${{ needs.ci.outputs.IMAGE_TAG }}
+          sudo apt-get update && sudo apt-get install -y yq
           yq -Yi '.image.tag = "${{ needs.ci.outputs.IMAGE_TAG }}"' charts/python-app/values.yaml
 
       - name: Commit and push changes to values.yaml
